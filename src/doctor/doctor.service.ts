@@ -9,11 +9,7 @@ import mongoose from "mongoose";
 
 @Injectable()
 export class DoctorService {
-    constructor(
-        @InjectModel(Doctor.name) private doctorModel: Model<DoctorDocument>,
-        @Inject(forwardRef(() => AppointmentService))
-        private appointmentService: AppointmentService,
-    ) {
+    constructor(@InjectModel(Doctor.name) private doctorModel: Model<DoctorDocument>) {
     }
 
     async create(payload: Doctor) {
@@ -30,20 +26,7 @@ export class DoctorService {
         return this.doctorModel.findById(new mongoose.Types.ObjectId(id));
     }
 
-    async activate(id: string) {
-        const appt: AppointmentDocument = await this.appointmentService.getById(id);
-        if (!appt) {
-            throw new AppointmentException("Can't find appointment by id")
-        }
-        appt.activate = true;
-        return (await appt.save()).toObject({ versionKey: false });
-    }
-
-    async getApptById(id: string) {
-        const appts = await this.appointmentService.getByDoctorId(id);
-        if (!appts) {
-            throw new AppointmentException("Can't find appointment by id")
-        }
-        return appts;
+    async deleteOne(id: string) {
+        return this.doctorModel.findByIdAndDelete(new mongoose.Types.ObjectId(id))
     }
 }

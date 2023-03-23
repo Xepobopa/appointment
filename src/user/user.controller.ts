@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, UsePipes } from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, UsePipes} from "@nestjs/common";
 import { UserService } from "./user.service";
 import { IdValidationPipe } from "../pipe/id-validation.pipe";
 
@@ -9,23 +9,22 @@ export class UserController {
 
     @Post('create')
     async writeUser(@Body() user) {
-        return await this.userService.writeUser(user);
+        console.log(user)
+        return await this.userService.writeUser(user.user);
     }
 
     @Get('get')
     async getAll() {
-        return await this.userService.getAll();
+        return await this.userService.getAllUsers();
     }
 
-    // @Get('getUser/:id')
-    // @UsePipes(IdValidationPipe)
-    // async getOne(@Param('id') id: string) {
-    //     return await this.userService.getById(id);
-    // }
+    @Get('get/:id')
+    async getUserById(@Param('id') id: string) {
+        return await this.userService.getById(id);
+    }
 
-    @Get('getAppts/:id')
-    @UsePipes(IdValidationPipe)
-    async getAppt(@Param('id') id: string) {
-        return await this.userService.getAppt(id);
+    @Delete('delete/:id')
+    async deleteOne(@Param('id') id: string) {
+        return await this.userService.deleteOne(id);
     }
 }

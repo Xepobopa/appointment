@@ -6,12 +6,14 @@ import { Appointment, AppointmentSchema } from "../schema/appointment.schema";
 import { ScheduleModule } from "../schedule/schedule.module";
 import { DoctorModule } from "../doctor/doctor.module";
 import { UserModule } from "../user/user.module";
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
   imports: [
       ScheduleModule,
-      forwardRef(() => DoctorModule),
-      forwardRef(() => UserModule),
+      ConfigModule,
+      DoctorModule,
+      UserModule,
       MongooseModule.forFeature([{ name: Appointment.name, schema: AppointmentSchema }])
   ],
   controllers: [AppointmentController],

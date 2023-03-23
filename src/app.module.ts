@@ -3,17 +3,23 @@ import {DoctorModule} from "./doctor/doctor.module";
 import {UserModule} from "./user/user.module";
 import {AppointmentModule} from "./appointment/appointment.module";
 import {MongooseModule} from "@nestjs/mongoose";
-import * as dotenv from "dotenv";
 import {ScheduleModule} from "@nestjs/schedule";
-dotenv.config();
+import {ConfigModule, ConfigService} from "@nestjs/config";
 
 @Module({
     imports: [
         DoctorModule,
         UserModule,
         AppointmentModule,
+        ConfigModule.forRoot(),
         ScheduleModule.forRoot(),
-        MongooseModule.forRoot(`${process.env.CONNECTION_STRING}`)
+        MongooseModule.forRootAsync({
+           imports: [ConfigModule],
+            useFactory: async (configService: ConfigService) => ({
+                uri: configService.get<string>('CONNECTION_STRING'),
+            }),
+            inject: [ConfigService]
+        }),
     ],
     controllers: [],
     providers: [],

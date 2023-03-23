@@ -8,11 +8,7 @@ import { UserException } from "../exception/user.exception";
 
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectModel(User.name) private userModel: Model<UserDocument>,
-        @Inject(forwardRef(() => AppointmentService))
-        private appointmentService: AppointmentService
-    ) {}
+    constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
     async writeUser(payload: User) {
         return (await this.userModel.create(payload)).toObject({ versionKey: false });
@@ -27,11 +23,11 @@ export class UserService {
         return a;
     }
 
-    async getAll() {
+    async getAllUsers() {
         return this.userModel.find();
     }
 
-    async getAppt(id: string) {
-        return this.appointmentService.getByUserId(id);
+    async deleteOne(id: string) {
+        return this.userModel.findByIdAndDelete( new mongoose.Types.ObjectId(id))
     }
 }
