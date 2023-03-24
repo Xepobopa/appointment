@@ -18,12 +18,14 @@ export class UserController {
         return await this.userService.getAllUsers();
     }
 
+    @UsePipes(IdValidationPipe)
     @Get('get/:id')
     async getUserById(@Param('id') id: string) {
         return await this.userService.getById(id);
     }
 
     @Delete('delete/:id')
+    @UsePipes(IdValidationPipe)
     async deleteOne(@Param('id') id: string) {
         return await this.userService.deleteOne(id);
     }

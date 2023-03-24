@@ -34,6 +34,7 @@ export class AppointmentController {
     }
 
     @Get('activateAppt/:id')
+    @UsePipes(IdValidationPipe)
     async activate(@Param('id') id: string) {
         return await this.appointmentService.activate(id);
     }
