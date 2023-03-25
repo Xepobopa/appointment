@@ -5,12 +5,13 @@ import { Model } from "mongoose";
 import { AppointmentService } from "../appointment/appointment.service";
 import mongoose from "mongoose";
 import { UserException } from "../exception/user.exception";
+import {UserDto} from "../dto/user.dto";
 
 @Injectable()
 export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-    async writeUser(payload: User) {
+    async writeUser(payload: UserDto) {
         return (await this.userModel.create(payload)).toObject({ versionKey: false });
     }
 

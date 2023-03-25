@@ -1,6 +1,13 @@
 import {Body, Controller, Delete, Get, Param, Post, UsePipes} from "@nestjs/common";
 import { UserService } from "./user.service";
 import { IdValidationPipe } from "../pipe/id-validation.pipe";
+import {IsNotEmpty} from "class-validator";
+import {UserDto} from "../dto/user.dto";
+
+class TestDto {
+    @IsNotEmpty()
+    var: number;
+}
 
 @Controller('user')
 export class UserController {
@@ -8,9 +15,9 @@ export class UserController {
     }
 
     @Post('create')
-    async writeUser(@Body() user) {
+    async writeUser(@Body() user: UserDto) {
         console.log(user)
-        return await this.userService.writeUser(user.user);
+        return await this.userService.writeUser(user);
     }
 
     @Get('get')

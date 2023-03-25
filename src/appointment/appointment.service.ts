@@ -8,6 +8,7 @@ import {ScheduleService} from "../schedule/schedule.service";
 import {UserService} from "../user/user.service";
 import {DoctorService} from "../doctor/doctor.service";
 import {ConfigService} from "@nestjs/config";
+import {AppointmentException} from "../exception/appointment.exception";
 
 
 @Injectable()
@@ -22,20 +23,20 @@ export class AppointmentService {
     private logger = new Logger();
 
     async create(appt: Appointment) {
-        // const uniqueAppt = await this.appointmentModel.findOne({
-        //     user: new mongoose.Types.ObjectId(appt.user),
-        //     doctor: new mongoose.Types.ObjectId(appt.doctor)
-        // });
-        // if (uniqueAppt) {
-        //     throw new AppointmentException("Can't create new appointment, because user already has an appointment to this doctor")
-        // }
-        //
-        // const appts_date = (await this.appointmentModel.find(
-        //         {doctor: new mongoose.Types.ObjectId(appt.doctor)})
-        // ).map(val => val.expiresAt.toLocaleDateString() === new Date().toLocaleDateString());
-        // if (appts_date.length >= 3) {
-        //     throw new AppointmentException("Can't create new appointment, because this doctor already has 3 appointments")
-        // }
+        const uniqueAppt = await this.appointmentModel.findOne({
+            user: new mongoose.Types.ObjectId(appt.user),
+            doctor: new mongoose.Types.ObjectId(appt.doctor)
+        });
+        if (uniqueAppt) {
+            throw new AppointmentException("Can't create new appointment, because user already has an appointment to this doctor")
+        }
+
+        const appts_date = (await this.appointmentModel.find(
+                {doctor: new mongoose.Types.ObjectId(appt.doctor)})
+        ).map(val => val.expiresAt.toLocaleDateString() === new Date().toLocaleDateString());
+        if (appts_date.length >= 3) {
+            throw new AppointmentException("Can't create new appointment, because this doctor already has 3 appointments")
+        }
 
         const payload = {
             ...appt,

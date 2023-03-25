@@ -4,6 +4,7 @@ import { Appointment } from "../schema/appointment.schema";
 import {IdValidationPipe} from "../pipe/id-validation.pipe";
 import {UserService} from "../user/user.service";
 import {DoctorService} from "../doctor/doctor.service";
+import {AppointmentDto} from "../dto/appointment.dto";
 
 @Controller('appointment')
 export class AppointmentController {
@@ -12,8 +13,8 @@ export class AppointmentController {
                 private readonly doctorService: DoctorService) {}
 
     @Post('create')
-    async create(@Body() appt) {
-        return await this.appointmentService.create(appt.appointment);
+    async create(@Body() appt: AppointmentDto) {
+        return await this.appointmentService.create(appt);
     }
 
     @Get('get')

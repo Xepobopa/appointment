@@ -1,15 +1,16 @@
 import {Body, Controller, Delete, Get, Param, Post, UsePipes} from "@nestjs/common";
 import { DoctorService } from "./doctor.service";
 import {IdValidationPipe} from "../pipe/id-validation.pipe";
+import {DoctorDto} from "../dto/doctor.dto";
 
 @Controller('doctor')
 export class DoctorController {
     constructor(private doctorService: DoctorService) {}
 
     @Post('create')
-    async create(@Body() doctor) {
+    async create(@Body() doctor: DoctorDto) {
         console.log(doctor);
-        return await this.doctorService.create(doctor.doctor);
+        return await this.doctorService.create(doctor);
     }
 
     @Get('get')

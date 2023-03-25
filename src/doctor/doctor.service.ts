@@ -6,13 +6,14 @@ import { AppointmentService } from "../appointment/appointment.service";
 import { AppointmentDocument } from "../schema/appointment.schema";
 import { AppointmentException } from "../exception/appointment.exception";
 import mongoose from "mongoose";
+import {DoctorDto} from "../dto/doctor.dto";
 
 @Injectable()
 export class DoctorService {
     constructor(@InjectModel(Doctor.name) private doctorModel: Model<DoctorDocument>) {
     }
 
-    async create(payload: Doctor) {
+    async create(payload: DoctorDto) {
         return (await this.doctorModel.create(payload)).toObject({ versionKey: false });
     }
 

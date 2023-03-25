@@ -7,6 +7,5 @@ export const userStub = (): User => {
         email: "jonathan.zamora@example.com",
         phone: "(410) 846-3762",
         photo_avatar: "https://kgo.googleusercontent.com/profile_vrt_raw_bytes_1587515358_10512.png",
-        reg_token: "1234-2121-1221-1211"
     }
 }
