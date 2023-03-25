@@ -24,10 +24,12 @@ export class DoctorService {
     }
 
     async getById(id: string) {
-        return this.doctorModel.findById(new mongoose.Types.ObjectId(id));
+        return this.doctorModel.findById(new mongoose.Types.ObjectId(id))
+            .orFail(new Error(`Doctor with id: '${id}' has not found`));
     }
 
     async deleteOne(id: string) {
         return this.doctorModel.findByIdAndDelete(new mongoose.Types.ObjectId(id))
+            .orFail(new Error(`Doctor with id: '${id}' has not found`))
     }
 }

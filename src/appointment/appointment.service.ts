@@ -59,6 +59,9 @@ export class AppointmentService {
 
     async activate(id: string) {
         const appt = await this.getApptById(id);
+        if (appt.activate) {
+            throw new AppointmentException('Appointment has already activated');
+        }
         appt.activate = true;
         return (await appt.save()).toObject({ versionKey: false });
     }

@@ -16,12 +16,8 @@ export class UserService {
     }
 
     async getById(id: string) {
-        console.log(id)
-        const a = await this.userModel.findById(new mongoose.Types.ObjectId(id));
-        if (!a) {
-            throw new UserException(id);
-        }
-        return a;
+        return this.userModel.findById(new mongoose.Types.ObjectId(id))
+            .orFail(new UserException(id));
     }
 
     async getAllUsers() {
@@ -30,5 +26,6 @@ export class UserService {
 
     async deleteOne(id: string) {
         return this.userModel.findByIdAndDelete( new mongoose.Types.ObjectId(id))
+            .orFail(new Error(`User with id: '${id}' has not found`));
     }
 }
