@@ -6,8 +6,8 @@ import {ValidationPipe} from "@nestjs/common";
 async function bootstrap() {
     mongoose.pluralize(null);
     const app = await NestFactory.create(AppModule);
+    app.enableCors();
     app.useGlobalPipes(new ValidationPipe());
-    //app.enableCors();
     const server = await app.listen( parseInt(process.env.PORT) || 5000);
     const router = server._events.request._router;
 
