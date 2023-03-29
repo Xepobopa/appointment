@@ -1,6 +1,6 @@
 import {Injectable, Logger} from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
-import {Appointment, AppointmentDocument, AppointmentSchema} from "../schema/appointment.schema";
+import {Appointment, AppointmentDocument} from "../schema/appointment.schema";
 import {Model} from "mongoose";
 import * as mongoose from "mongoose";
 import {randomUUID} from "crypto";
@@ -49,8 +49,6 @@ export class AppointmentService {
 
         const doctor = await this.doctorService.getById(new_appt.doctor);
         const user = await this.userService.getById(new_appt.user);
-        console.log(doctor);
-        console.log(user);
         await this.scheduleService.addCronJob(randomUUID(), 50, new_appt.expiresAt, doctor.spec, user.name);
         await this.scheduleService.addCronJob(randomUUID(), 80, new_appt.expiresAt, doctor.spec, user.name)
 
@@ -63,13 +61,12 @@ export class AppointmentService {
             throw new AppointmentException('Appointment has already activated');
         }
         appt.activate = true;
-        return (await appt.save()).toObject({ versionKey: false });
+        return await appt.save();
     }
 
     async getAll() {
         return (await this.appointmentModel.find().orFail(new Error('No appointments found!'))).map(appt => {
-            const object = appt.toObject({versionKey: false});
-            return {...object, date: `${object.expiresAt.toLocaleString()}`}
+            return {...appt, date: `${appt.expiresAt.toLocaleString()}`}
         })
     }
 

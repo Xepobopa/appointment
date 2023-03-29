@@ -1,6 +1,5 @@
 import {Body, Controller, Get, Param, Post, UsePipes} from '@nestjs/common';
 import { AppointmentService } from './appointment.service';
-import { Appointment } from "../schema/appointment.schema";
 import {IdValidationPipe} from "../pipe/id-validation.pipe";
 import {UserService} from "../user/user.service";
 import {DoctorService} from "../doctor/doctor.service";

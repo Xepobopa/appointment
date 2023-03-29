@@ -1,11 +1,10 @@
 import { Prop, raw, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
 import * as mongoose from "mongoose";
-import {IsBoolean, IsDate, IsMongoId, IsNotEmpty} from "class-validator";
 
 export type AppointmentDocument = HydratedDocument<Appointment>;
 
-@Schema({ timestamps: true })
+@Schema({ timestamps: true, versionKey: false })
 export class Appointment {
     @Prop(
         raw({

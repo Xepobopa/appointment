@@ -1,10 +1,9 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import {IsBoolean, IsEmail, IsNotEmpty, IsPhoneNumber} from "class-validator";
 
 export type DoctorDocument = HydratedDocument<Doctor>;
 
-@Schema()
+@Schema({ versionKey: false })
 export class Doctor {
     @Prop({ type: String, default: 'harry.sutton@example.com' })
     email: string;

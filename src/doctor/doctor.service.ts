@@ -2,9 +2,6 @@ import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Doctor, DoctorDocument } from "../schema/doctor.schema";
-import { AppointmentService } from "../appointment/appointment.service";
-import { AppointmentDocument } from "../schema/appointment.schema";
-import { AppointmentException } from "../exception/appointment.exception";
 import mongoose from "mongoose";
 import {DoctorDto} from "../dto/doctor.dto";
 
@@ -14,13 +11,11 @@ export class DoctorService {
     }
 
     async create(payload: DoctorDto) {
-        return (await this.doctorModel.create(payload)).toObject({ versionKey: false });
+        return await this.doctorModel.create(payload);
     }
 
     async getAll() {
-        return (await this.doctorModel.find()).map(doctor =>
-            doctor.toObject({ versionKey: false })
-        );
+        return this.doctorModel.find();
     }
 
     async getById(id: string) {
