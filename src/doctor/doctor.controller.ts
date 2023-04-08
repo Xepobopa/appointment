@@ -9,7 +9,6 @@ export class DoctorController {
 
     @Post('create')
     async create(@Body() doctor: DoctorDto) {
-        console.log(doctor);
         return await this.doctorService.create(doctor);
     }
 

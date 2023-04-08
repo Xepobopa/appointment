@@ -16,7 +16,6 @@ export class UserController {
 
     @Post('create')
     async writeUser(@Body() user: UserDto) {
-        console.log(user)
         return await this.userService.writeUser(user);
     }
 
