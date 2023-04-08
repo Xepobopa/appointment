@@ -9,6 +9,7 @@ import {UserService} from "../user/user.service";
 import {DoctorService} from "../doctor/doctor.service";
 import {ConfigService} from "@nestjs/config";
 import {AppointmentException} from "../exception/appointment.exception";
+import { AppointmentDto } from "../dto/appointment.dto";
 
 
 @Injectable()
@@ -22,7 +23,7 @@ export class AppointmentService {
     ) {}
     private logger = new Logger();
 
-    async create(appt: Appointment) {
+    async create(appt: AppointmentDto) {
         const uniqueAppt = await this.appointmentModel.findOne({
             user: new mongoose.Types.ObjectId(appt.user),
             doctor: new mongoose.Types.ObjectId(appt.doctor)
