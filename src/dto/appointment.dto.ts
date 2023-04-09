@@ -17,7 +17,7 @@ export class AppointmentDto {
     @IsMongoId()
     doctor: string;
 
-    @IsNotEmpty({ message: 'IsActivate should be not empty' })
+    //@IsNotEmpty({ message: 'IsActivate should be not empty' })
     @IsBoolean()
-    activate: boolean;
+    activate: boolean = false;
 }

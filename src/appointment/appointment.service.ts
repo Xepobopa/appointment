@@ -43,10 +43,11 @@ export class AppointmentService {
             ...appt,
             user: new mongoose.Types.ObjectId(appt.user),
             doctor: new mongoose.Types.ObjectId(appt.doctor),
-            date: new Date(Date.now() + (this.configService.get<number>('TTLSEC') * 1000))
+            createdAt: new Date(),
+            expiresAt: new Date(Date.now() + (this.configService.get<number>('TTLSEC') * 1000))
         }
 
-        const new_appt: Appointment = (await this.appointmentModel.create(payload)).toObject({ versionKey: false });
+        const new_appt: Appointment = await this.appointmentModel.create(payload);
 
         const doctor = await this.doctorService.getById(new_appt.doctor);
         const user = await this.userService.getById(new_appt.user);
@@ -66,9 +67,7 @@ export class AppointmentService {
     }
 
     async getAll() {
-        return (await this.appointmentModel.find().orFail(new Error('No appointments found!'))).map(appt => {
-            return {...appt, date: `${appt.expiresAt.toLocaleString()}`}
-        })
+        return (await this.appointmentModel.find().orFail(new Error('No appointments found!')));
     }
 
     async getByUserId(id: string) {

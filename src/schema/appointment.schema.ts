@@ -15,16 +15,13 @@ export class Appointment {
     )
     expiresAt: Date;
 
-    @Prop({ type: Date })
-    date: Date
-
     @Prop({ type: mongoose.Types.ObjectId, ref: 'User' })
     user: string;
 
     @Prop({ type: mongoose.Types.ObjectId, ref: 'Doctor' })
     doctor: string;
 
-    @Prop({ type: Boolean })
+    @Prop({ type: Boolean, default: false })
     activate: boolean;
 }
 
