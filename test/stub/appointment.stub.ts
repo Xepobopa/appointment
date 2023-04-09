@@ -1,11 +1,33 @@
-import {Appointment} from "../../src/schema/appointment.schema";
+export class AppointmentStub  {
+    _id: string;
+    doctor: string;
+    user: string;
+    activate: boolean;
+    expiresAt: string;
+    updatedAt: string;
+    createdAt: string;
 
-export const appointmentStub = (): Appointment => {
-    return {
-        doctor: "640a24269666a385f51e3554",
-        user: "640a23c116fee22175516cce",
-        date: new Date(),
-        expiresAt: new Date(),
-        activate: false
+    constructor() {
+        this.activate = false;
+    }
+
+    set(object: Partial<AppointmentStub>) {
+        Object.assign(this, object);
+    }
+
+    get() {
+        return {
+            _id: this._id,
+            doctor: this.doctor,
+            user: this.user,
+            activate: this.activate,
+            expiresAt: this.expiresAt,
+            updatedAt: expect.any(String),
+            createdAt: this.createdAt,
+        }
+    }
+
+    appointmentPayload() {
+        return { user: this.user, doctor: this.doctor }
     }
 }
