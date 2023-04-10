@@ -8,6 +8,7 @@ import { doctorStub } from "./stub/doctor.stub";
 describe("Doctors", () => {
   let app: INestApplication;
   let createdId: string;
+  let stub: doctorStub;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -15,18 +16,19 @@ describe("Doctors", () => {
     }).compile();
 
     app = moduleRef.createNestApplication();
+    stub = new doctorStub("doctor_doctor@gmail.com")
     await app.init();
   });
 
   it("/POST \t doctor/create", () => {
     return request(app.getHttpServer())
       .post("/doctor/create")
-      .send(doctorStub())
+      .send(stub.get())
       .expect(201)
       .then(({ body }) => {
         createdId = body._id;
         expect(body).toEqual({
-          ...doctorStub(),
+          ...stub.get(),
           _id: createdId
         });
       });
@@ -37,10 +39,10 @@ describe("Doctors", () => {
       .get("/doctor/get")
       .expect(200)
       .then(({ body }) => {
-        expect(body).toEqual([{
-          ...doctorStub(),
+        expect(body).toContainEqual({
+          ...stub.get(),
           _id: createdId
-        }]);
+        });
       });
   });
 
@@ -49,7 +51,7 @@ describe("Doctors", () => {
       .delete(`/doctor/delete/${createdId}`)
       .then(({ body }) => {
         expect(body).toEqual({
-          ...doctorStub(),
+          ...stub.get(),
           _id: createdId
         });
       });

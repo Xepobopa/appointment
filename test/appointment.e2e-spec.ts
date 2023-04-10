@@ -27,16 +27,19 @@ describe("Appointments", () => {
 
 
     it("/POST \t user/create", async () => {
+        let stubDoc = new doctorStub("doctor_appointment@gmail.com");
+        let stubUser = new userStub("user_appointment@gmail.com");
+
         await request(app.getHttpServer())
             .post("/user/create")
-            .send(userStub())
+            .send(stubUser.get())
             .then(({body}) => {
                 stub.user = body._id;
             });
 
         await request(app.getHttpServer())
             .post("/doctor/create")
-            .send(doctorStub())
+            .send(stubDoc.get())
             .then(({body}) => {
                 stub.doctor = body._id;
             });
@@ -63,7 +66,7 @@ describe("Appointments", () => {
             .get('/appointment/get')
             .then(({body}) => {
                 console.log(body);
-                expect(body).toEqual([stub.get()]);
+                expect(body).toContainEqual(stub.get());
             });
     });
 
