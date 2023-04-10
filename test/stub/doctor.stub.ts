@@ -1,13 +1,33 @@
 import {Doctor} from "../../src/schema/doctor.schema";
 
-export const doctorStub = (): Doctor => {
-    return {
-        type: "doc",
-        email: "reid.moreno@example.com",
-        name: "Einstein",
-        phone: "(198) 255-5611",
-        photo_avatar: "https://kgo.googleusercontent.com/profile_vrt_raw_bytes_1587515358_10512.png",
-        spec: "therapist",
-        free: true
+export class doctorStub {
+    type: string
+    email: string
+    name: string
+    phone: string
+    photo_avatar: string
+    spec: string
+    free: boolean
+
+    constructor(email: string) {
+        this.type = "doc"
+        this.email = email
+        this.name = "Einstein"
+        this.phone = "+380972342758"
+        this.photo_avatar = "https://kgo.googleusercontent.com/profile_vrt_raw_bytes_1587515358_10512.png"
+        this.spec = "therapist"
+        this.free = true
+    }
+
+    get() {
+        return {
+            type: this.type,
+            email: this.email,
+            name: this.name,
+            phone: this.phone,
+            photo_avatar: this.photo_avatar,
+            spec: this.spec,
+            free: this.free
+        }
     }
 }
