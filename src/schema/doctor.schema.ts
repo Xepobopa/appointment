@@ -5,19 +5,19 @@ export type DoctorDocument = HydratedDocument<Doctor>;
 
 @Schema({ versionKey: false })
 export class Doctor {
-    @Prop({ type: String, default: 'harry.sutton@example.com' })
+    @Prop({ type: String, unique: true })
     email: string;
 
     @Prop({ type: String })
     photo_avatar: string;
 
-    @Prop({ type: String, default: '(743) 805-2841' })
+    @Prop({ type: String })
     phone: string;
 
-    @Prop({ type: String, default: 'Summer Smith' })
+    @Prop({ type: String })
     name: string;
 
-    @Prop({ type: String, default: 'therapist' })
+    @Prop({ type: String })
     type: string;
 
     @Prop({ type: String })
