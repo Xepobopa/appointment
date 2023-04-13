@@ -1,10 +1,6 @@
 import {IsBoolean, IsDate, IsMongoId, IsNotEmpty} from "class-validator";
 
 export class AppointmentDto {
-    // @IsNotEmpty({ message: 'ExpiresAt should be not empty' })
-    // @IsDate()
-    // expiresAt: Date;
-
     //@IsNotEmpty({ message: 'Date should be not empty' })
     @IsDate()
     date: Date = new Date();

@@ -1,4 +1,4 @@
-import {IsDataURI, IsEmail, IsNotEmpty, IsPhoneNumber, IsUrl} from "class-validator";
+import {IsDataURI, IsEmail, IsNotEmpty, IsPhoneNumber, IsString, IsUrl} from "class-validator";
 
 export class UserDto {
     @IsNotEmpty({ message: 'Email should be not empty' })
@@ -14,8 +14,10 @@ export class UserDto {
     phone: string;
 
     @IsNotEmpty({ message: 'Name should be not empty' })
+    @IsString()
     name: string;
 
     @IsNotEmpty({ message: 'User type should be not empty' })
+    @IsString()
     type: string;
 }
